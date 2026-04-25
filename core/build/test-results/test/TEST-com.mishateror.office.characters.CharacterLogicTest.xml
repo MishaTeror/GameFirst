@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.mishateror.office.characters.CharacterLogicTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-04-23T13:20:11.902Z" hostname="MacBook-Air-Mihajlo.local" time="0.004">
+  <properties/>
+  <testcase name="testHeal()" classname="com.mishateror.office.characters.CharacterLogicTest" time="0.0"/>
+  <testcase name="testTakeDamageWithBlock()" classname="com.mishateror.office.characters.CharacterLogicTest" time="0.001"/>
+  <testcase name="testInitialStats()" classname="com.mishateror.office.characters.CharacterLogicTest" time="0.001"/>
+  <testcase name="testTakeDamageWithoutBlock()" classname="com.mishateror.office.characters.CharacterLogicTest" time="0.001"/>
+  <testcase name="testStatIncreases()" classname="com.mishateror.office.characters.CharacterLogicTest" time="0.0"/>
+  <testcase name="testApManagement()" classname="com.mishateror.office.characters.CharacterLogicTest" time="0.0"/>
+  <testcase name="testPoison()" classname="com.mishateror.office.characters.CharacterLogicTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.mishateror.office.BattleManagerTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-04-23T13:20:11.874Z" hostname="MacBook-Air-Mihajlo.local" time="0.017">
+  <properties/>
+  <testcase name="testCheckWinCondition()" classname="com.mishateror.office.BattleManagerTest" time="0.007"/>
+  <testcase name="testPlayerUseAbility()" classname="com.mishateror.office.BattleManagerTest" time="0.001"/>
+  <testcase name="testSetAndGetBattleLog()" classname="com.mishateror.office.BattleManagerTest" time="0.001"/>
+  <testcase name="testEndPlayerTurn()" classname="com.mishateror.office.BattleManagerTest" time="0.0"/>
+  <testcase name="testInitialization()" classname="com.mishateror.office.BattleManagerTest" time="0.0"/>
+  <testcase name="testStartBattle()" classname="com.mishateror.office.BattleManagerTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
