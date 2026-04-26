@@ -159,7 +159,6 @@ public class BattleManager {
             battleLog = "Victory! Office cleared!";
 
             ReflectionDebugger.printObjectState(player);
-            SaveManager.savePlayer(player);
 
             return true;
         }

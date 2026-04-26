@@ -9,14 +9,13 @@ import com.mishateror.office.BattleManager;
 import com.mishateror.office.RewardManager;
 import com.mishateror.office.characters.Player;
 import com.mishateror.office.characters.Enemy;
-import com.mishateror.office.ability.Ability;
 import com.mishateror.office.ability.AttackAbility;
-import com.mishateror.office.ability.DefendAbility;
-import com.mishateror.office.ability.PoisonAbility;
 import com.mishateror.office.ui.BattleUI;
 import com.mishateror.office.patterns.StageFactory;
 import com.mishateror.office.patterns.MonsterStageFactory;
 import com.mishateror.office.patterns.BossStageFactory;
+import com.mishateror.office.GameState;
+import com.mishateror.office.SaveManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,16 +42,13 @@ public class BattleScreen implements Screen {
     public BattleScreen(final MainGame game) {
         this.game = game;
         this.nextFloor = 1;
-        this.random = new Random();
 
         Player knight = new Player("Knight", 20, 6, 20);
-
         knight.addAbility(new AttackAbility("Basic Strike", 2, 0, 5));
-        knight.addAbility(RewardManager.getRandomAbility());
-        knight.addAbility(RewardManager.getRandomAbility());
+        knight.addAbility(RewardManager.getInstance().getRandomAbility());
+        knight.addAbility(RewardManager.getInstance().getRandomAbility());
 
         this.knight = knight;
-
         startBattleForFloor();
     }
 
@@ -67,8 +63,6 @@ public class BattleScreen implements Screen {
         this.game = game;
         this.knight = player;
         this.nextFloor = nextFloor;
-        this.random = new Random();
-
         startBattleForFloor();
     }
 
@@ -125,7 +119,11 @@ public class BattleScreen implements Screen {
      * On enemy defeated.
      */
     public void onEnemyDefeated() {
-        game.setScreen(new LevelClearedScreen(game, battleManager.getPlayer(), nextFloor));
+        if (battleManager.isGameOver() && !knight.isDead()) {
+            SaveManager.saveGame(new GameState(knight, nextFloor + 1));
+
+            game.setScreen(new LevelClearedScreen(game, knight, nextFloor));
+        }
         dispose();
     }
 

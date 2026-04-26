@@ -1,147 +1,135 @@
 package com.mishateror.office.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Vector3;
 import com.mishateror.office.MainGame;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mishateror.office.ui.Button;
+import com.mishateror.office.GameState;
+import com.mishateror.office.SaveManager;
 
 /**
  * The type Main menu screen.
  */
 public class MainMenuScreen implements Screen {
-    /**
-     * The Game.
-     */
-    final MainGame game;
 
-    /**
-     * The Sprite sheet.
-     */
-    Texture spriteSheet;
-    /**
-     * The Animation.
-     */
-    Animation<TextureRegion> animation;
-    /**
-     * The State time.
-     */
-    float stateTime = 0f;
+    private MainGame game;
+    private OrthographicCamera camera;
 
-    /**
-     * The Play btn.
-     */
-    Button playBtn;
-    private Button btnExit;
-    private int highscore;
+    private Button playButton;
+    private Button loadButton;
+    private Button exitButton;
+
+    private Vector3 touchPoint;
+    private String feedbackMessage = "";
 
     /**
      * Instantiates a new Main menu screen.
      *
      * @param game the game
      */
-    public MainMenuScreen(final MainGame game) {
+    public MainMenuScreen(MainGame game) {
         this.game = game;
+        this.touchPoint = new Vector3();
 
-        spriteSheet = new Texture("menu.png");
+        this.camera = new OrthographicCamera();
+        this.camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-        int Frame_Cols = 5;
-        int Frame_Rows = 15;
+        int screenWidth = Gdx.graphics.getWidth();
+        int screenHeight = Gdx.graphics.getHeight();
 
-        int frameWidth = spriteSheet.getWidth() / Frame_Cols;
-        int frameHeight = spriteSheet.getHeight() / Frame_Rows;
+        int buttonWidth = 200;
+        int buttonHeight = 50;
+        int startX = (screenWidth - buttonWidth) / 2;
 
-        TextureRegion[][] tmp = TextureRegion.split(spriteSheet, frameWidth, frameHeight);
-
-        TextureRegion[] frames = new TextureRegion[Frame_Rows * Frame_Cols];
-
-        int index = 0;
-        for (int i = 0; i < Frame_Rows; i++) {
-            for (int j = 0; j < Frame_Cols; j++) {
-                frames[index++] = tmp[i][j];
-            }
-        }
-
-        animation = new Animation<TextureRegion>(0.1f, frames);
-
-        int screenW = Gdx.graphics.getWidth();
-        int screenH = Gdx.graphics.getHeight();
-        int btnW = 200, btnH = 60;
-        int btnX = (screenW - btnW) / 2;
-        int btnY = screenH / 2 - 50;
-
-        playBtn = new Button(btnX, btnY, btnW, btnH, "Start");
-        btnExit = new Button(btnX, btnY - 80, btnW, btnH, "EXIT");
-
-        Preferences prefs = Gdx.app.getPreferences("OfficeGamePrefs");
-        highscore = prefs.getInteger("Highscore", 1);
+        playButton = new Button(startX, screenHeight / 2 + 30, buttonWidth, buttonHeight, "NEW GAME");
+        loadButton = new Button(startX, screenHeight / 2 - 40, buttonWidth, buttonHeight, "LOAD GAME");
+        exitButton = new Button(startX, screenHeight / 2 - 110, buttonWidth, buttonHeight, "EXIT", new Color(0.5f, 0.2f, 0.2f, 0.8f));
     }
 
     @Override
+    public void show() { }
+
+    @Override
     public void render(float delta) {
+        Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        stateTime += delta;
-
-        int screenW = Gdx.graphics.getWidth();
-        int screenH = Gdx.graphics.getHeight();
-
-        TextureRegion currentFrame = animation.getKeyFrame(stateTime, true);
-
-        game.batch.begin();
-        game.batch.draw(currentFrame, 0, 0, screenW, screenH);
-        game.batch.end();
+        camera.update();
 
         if (Gdx.input.justTouched()) {
-            float mouseX = Gdx.input.getX();
-            float mouseY = Gdx.graphics.getHeight() - Gdx.input.getY();
+            camera.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
 
-            if (playBtn.isClicked(mouseX, mouseY)) {
+            if (playButton.isClicked(touchPoint.x, touchPoint.y)) {
                 game.setScreen(new BattleScreen(game));
                 dispose();
-                return;
-            } else if (btnExit.isClicked(mouseX, mouseY)) {
+            }
+
+            if (loadButton.isClicked(touchPoint.x, touchPoint.y)) {
+                GameState savedState = SaveManager.loadGame();
+                if (savedState != null && savedState.getPlayer() != null) {
+                    game.setScreen(new BattleScreen(game, savedState.getPlayer(), savedState.getCurrentFloor()));
+                    dispose();
+                } else {
+                    feedbackMessage = "No save file found!";
+                }
+            }
+
+            if (exitButton.isClicked(touchPoint.x, touchPoint.y)) {
                 Gdx.app.exit();
             }
         }
 
-        Gdx.gl.glEnable(GL20.GL_BLEND);
-        game.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        game.shapeRenderer.setProjectionMatrix(camera.combined);
 
-        playBtn.drawShape(game.shapeRenderer);
-        btnExit.drawShape(game.shapeRenderer);
+        Gdx.gl.glEnable(GL20.GL_BLEND);
+        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+
+        game.shapeRenderer.begin(com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType.Filled);
+
+        playButton.drawShape(game.shapeRenderer);
+        loadButton.drawShape(game.shapeRenderer);
+        exitButton.drawShape(game.shapeRenderer);
 
         game.shapeRenderer.end();
         Gdx.gl.glDisable(GL20.GL_BLEND);
 
+        game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
+
         game.font.setColor(Color.WHITE);
+        game.font.draw(game.batch, "THE OFFICE DUNGEON", Gdx.graphics.getWidth() / 2f - 80, Gdx.graphics.getHeight() / 2f + 120);
 
-        game.font.draw(game.batch, "Slay the Kisliy", screenW / 2f - 60, screenH - 100);
+        playButton.drawText(game.batch, game.font);
+        loadButton.drawText(game.batch, game.font);
+        exitButton.drawText(game.batch, game.font);
 
-        game.font.setColor(Color.YELLOW);
-        game.font.draw(game.batch, "Highest Floor Reached: " + highscore, screenW / 2f - 90, screenH - 150);
-
-        playBtn.drawText(game.batch, game.font);
-        btnExit.drawText(game.batch, game.font);
+        if (!feedbackMessage.isEmpty()) {
+            game.font.setColor(Color.RED);
+            game.font.draw(game.batch, feedbackMessage, (Gdx.graphics.getWidth() / 2f) - 60, (Gdx.graphics.getHeight() / 2f) - 150);
+            game.font.setColor(Color.WHITE);
+        }
 
         game.batch.end();
     }
 
     @Override
-    public void dispose() {
-        spriteSheet.dispose();
+    public void resize(int width, int height) {
+        camera.setToOrtho(false, width, height);
     }
 
-    @Override public void show() {}
-    @Override public void resize(int width, int height) {}
-    @Override public void pause() {}
-    @Override public void resume() {}
-    @Override public void hide() {}
+    @Override
+    public void pause() { }
+
+    @Override
+    public void resume() { }
+
+    @Override
+    public void hide() { }
+
+    @Override
+    public void dispose() { }
 }

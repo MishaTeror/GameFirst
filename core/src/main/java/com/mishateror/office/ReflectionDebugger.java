@@ -7,6 +7,11 @@ import java.lang.reflect.Field;
  */
 public class ReflectionDebugger {
 
+    /**
+     * Print object state.
+     *
+     * @param obj the obj
+     */
     public static void printObjectState(Object obj) {
         System.out.println("=== [REFLECTION] DEBUGGING " + obj.getClass().getSimpleName() + " ===");
 

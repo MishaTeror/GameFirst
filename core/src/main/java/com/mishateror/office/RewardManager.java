@@ -6,12 +6,43 @@ import com.mishateror.office.ability.DefendAbility;
 import com.mishateror.office.ability.PoisonAbility;
 import com.mishateror.office.characters.Player;
 
-import java.util.Random;
-
 /**
  * The type Reward manager.
  */
 public class RewardManager {
+
+    private static RewardManager instance;
+
+    private static RandomPool<Ability> abilityPool;
+    private static RandomPool<BuffType> buffPool;
+
+    private RewardManager() {
+        abilityPool = new RandomPool<>();
+        buffPool = new RandomPool<>();
+
+        abilityPool.add(new AttackAbility("Fireball", 3, 1, 14));
+        abilityPool.add(new AttackAbility("Quick Slash", 1, 0, 5));
+        abilityPool.add(new AttackAbility("Sniper Shot", 4, 0, 22));
+        abilityPool.add(new DefendAbility("Iron Wall", 2, 2, 8));
+        abilityPool.add(new DefendAbility("Dodge", 1, 1, 4));
+        abilityPool.add(new PoisonAbility("Venom Flask", 2, 2, 4, 3, 3));
+
+        for (BuffType buff : BuffType.values()) {
+            buffPool.add(buff);
+        }
+    }
+
+    /**
+     * Gets instance.
+     *
+     * @return the instance
+     */
+    public static RewardManager getInstance() {
+        if (instance == null) {
+            instance = new RewardManager();
+        }
+        return instance;
+    }
 
     /**
      * The enum Buff type.
@@ -43,18 +74,10 @@ public class RewardManager {
      */
     public static void applyBuffToPlayer(Player player, BuffType buff) {
         switch (buff) {
-            case MAX_HP:
-                player.increaseMaxHealth(5);
-                break;
-            case MAX_AP:
-                player.increaseMaxAp(1);
-                break;
-            case MAX_BLOCK:
-                player.increaseMaxBlock(5);
-                break;
-            case DAMAGE_MULT:
-                player.addDamageMultiplier(0.5f);
-                break;
+            case MAX_HP: player.increaseMaxHealth(5); break;
+            case MAX_AP: player.increaseMaxAp(1); break;
+            case MAX_BLOCK: player.increaseMaxBlock(5); break;
+            case DAMAGE_MULT: player.addDamageMultiplier(0.5f); break;
         }
     }
 
@@ -80,17 +103,7 @@ public class RewardManager {
      * @return the random ability
      */
     public static Ability getRandomAbility() {
-        Random rand = new Random();
-        int r = rand.nextInt(6);
-        switch (r) {
-            case 0: return new AttackAbility("Fireball", 3, 1, 14);
-            case 1: return new AttackAbility("Quick Slash", 1, 0, 5);
-            case 2: return new AttackAbility("Sniper Shot", 4, 0, 22);
-            case 3: return new DefendAbility("Iron Wall", 2, 2, 8);
-            case 4: return new DefendAbility("Dodge", 1, 1, 4);
-            case 5: return new PoisonAbility("Venom Flask", 2, 2, 4, 3, 3);
-            default: return new AttackAbility("Basic Strike", 2, 0, 5);
-        }
+        return abilityPool.getRandom();
     }
 
     /**
@@ -99,8 +112,6 @@ public class RewardManager {
      * @return the random buff
      */
     public static BuffType getRandomBuff() {
-        Random rand = new Random();
-        BuffType[] buffs = BuffType.values();
-        return buffs[rand.nextInt(buffs.length)];
+        return buffPool.getRandom();
     }
 }
