@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.mishateror.office.RewardManagerTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-04-23T13:20:11.892Z" hostname="MacBook-Air-Mihajlo.local" time="0.002">
+<testsuite name="com.mishateror.office.RewardManagerTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-04-26T13:49:16.015Z" hostname="MacBook-Air-Mihajlo.local" time="0.013">
   <properties/>
+  <testcase name="testSingletonInstance()" classname="com.mishateror.office.RewardManagerTest" time="0.004"/>
   <testcase name="testRandomGenerators()" classname="com.mishateror.office.RewardManagerTest" time="0.001"/>
-  <testcase name="testBuffDescriptions()" classname="com.mishateror.office.RewardManagerTest" time="0.0"/>
-  <testcase name="testApplyBuffToPlayer()" classname="com.mishateror.office.RewardManagerTest" time="0.0"/>
+  <testcase name="testBuffDescriptions()" classname="com.mishateror.office.RewardManagerTest" time="0.005"/>
+  <testcase name="testApplyBuffToPlayer()" classname="com.mishateror.office.RewardManagerTest" time="0.001"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.mishateror.office.patterns.StrategyPatternTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-04-26T13:49:16.046Z" hostname="MacBook-Air-Mihajlo.local" time="0.004">
+  <properties/>
+  <testcase name="testNormalStanceDefault()" classname="com.mishateror.office.patterns.StrategyPatternTest" time="0.0"/>
+  <testcase name="testAggressiveStanceSwitch()" classname="com.mishateror.office.patterns.StrategyPatternTest" time="0.001"/>
+  <testcase name="testAggressiveStanceDamageTaken()" classname="com.mishateror.office.patterns.StrategyPatternTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

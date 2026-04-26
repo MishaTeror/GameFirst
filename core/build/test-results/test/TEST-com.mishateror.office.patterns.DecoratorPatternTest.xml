@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.mishateror.office.patterns.DecoratorPatternTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-04-26T13:49:16.044Z" hostname="MacBook-Air-Mihajlo.local" time="0.001">
+  <properties/>
+  <testcase name="testDecoratorBonusDamage()" classname="com.mishateror.office.patterns.DecoratorPatternTest" time="0.001"/>
+  <testcase name="testDecoratorProperties()" classname="com.mishateror.office.patterns.DecoratorPatternTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

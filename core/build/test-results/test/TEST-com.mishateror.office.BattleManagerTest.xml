@@ -1,12 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.mishateror.office.BattleManagerTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-04-23T13:20:11.874Z" hostname="MacBook-Air-Mihajlo.local" time="0.017">
+<testsuite name="com.mishateror.office.BattleManagerTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-04-26T13:49:15.956Z" hostname="MacBook-Air-Mihajlo.local" time="0.051">
   <properties/>
-  <testcase name="testCheckWinCondition()" classname="com.mishateror.office.BattleManagerTest" time="0.007"/>
-  <testcase name="testPlayerUseAbility()" classname="com.mishateror.office.BattleManagerTest" time="0.001"/>
-  <testcase name="testSetAndGetBattleLog()" classname="com.mishateror.office.BattleManagerTest" time="0.001"/>
-  <testcase name="testEndPlayerTurn()" classname="com.mishateror.office.BattleManagerTest" time="0.0"/>
-  <testcase name="testInitialization()" classname="com.mishateror.office.BattleManagerTest" time="0.0"/>
+  <testcase name="testCheckWinCondition()" classname="com.mishateror.office.BattleManagerTest" time="0.019"/>
+  <testcase name="testPlayerUseAbility()" classname="com.mishateror.office.BattleManagerTest" time="0.018"/>
+  <testcase name="testSetAndGetBattleLog()" classname="com.mishateror.office.BattleManagerTest" time="0.002"/>
+  <testcase name="testEndPlayerTurn()" classname="com.mishateror.office.BattleManagerTest" time="0.002"/>
+  <testcase name="testInitialization()" classname="com.mishateror.office.BattleManagerTest" time="0.001"/>
   <testcase name="testStartBattle()" classname="com.mishateror.office.BattleManagerTest" time="0.0"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
+  <system-out><![CDATA[=== [REFLECTION] DEBUGGING Player ===
+Field: name = Hero
+Field: health = 20
+Field: maxHealth = 20
+Field: ap = 0
+Field: maxAp = 6
+Field: block = 10
+Field: maxBlock = 10
+Field: abilities = [com.mishateror.office.ability.AttackAbility@1da2219c]
+Field: damageMultiplier = 1.0
+Field: poisonTurns = 0
+Field: poisonDamage = 0
+Field: currentStance = com.mishateror.office.patterns.NormalStance@76a13b12
+=========================================
+]]></system-out>
+  <system-err><![CDATA[апр. 26, 2026 3:49:15 PM com.mishateror.office.BattleManager startBattle
+INFO: Battle started! Player against Goblin
+апр. 26, 2026 3:49:15 PM com.mishateror.office.BattleManager onPlayerUseAbility
+INFO: Player successfully used Strike on Goblin
+апр. 26, 2026 3:49:16 PM com.mishateror.office.BattleManager startBattle
+INFO: Battle started! Player against Goblin
+апр. 26, 2026 3:49:16 PM com.mishateror.office.BattleManager startBattle
+INFO: Battle started! Player against Goblin
+апр. 26, 2026 3:49:16 PM com.mishateror.office.BattleManager startBattle
+INFO: Battle started! Player against Goblin
+]]></system-err>
 </testsuite>
